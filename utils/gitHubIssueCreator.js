@@ -52,14 +52,20 @@ class GitHubIssueCreator {
                 prompt_template: promptTemplate
             }
         };
-
-        // Create and train a model
-        let openai_model = await MindsDB.default.Models.trainModel(
-            model,
-            'generated_issue',
-            'mindsdb',
-            trainingOptions
-        );
+        
+        try{
+            // Create and train a model
+            let openai_model = await MindsDB.default.Models.trainModel(
+                model,
+                'generated_issue',
+                'mindsdb',
+                trainingOptions
+            );
+        } catch (error) {
+            // Couldn't connect to database.
+            console.error(error);
+            let openai_model = await MindsDB.default.Models.getModel(model, 'mindsdb');
+        }
         
         console.log('Created a model');
 
