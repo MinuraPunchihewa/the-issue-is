@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "mindsdb-js-sdk": "^2.2.2"
+  }
+}
