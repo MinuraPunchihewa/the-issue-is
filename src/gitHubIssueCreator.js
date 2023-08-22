@@ -62,7 +62,7 @@ class GitHubIssueCreator {
 
             // If the model doesn't exist, create it
             if (!openAIModel) {
-                await MindsDB.default.Models.trainModel(
+                const openAIModel = await MindsDB.default.Models.trainModel(
                     model,
                     'generated_issue',
                     'mindsdb',
@@ -70,23 +70,25 @@ class GitHubIssueCreator {
                 );
             }
         } catch (error) {
-            // Couldn't connect to database
+            // Couldn't create model
             console.error(error);
         }
         
         console.log(`Created OpenAI model ${model} in MindsDB.`);
 
         // Wait for the training to be completed
-        while (openai_model.status !== 'complete' && openai_model.status !== 'error') {
-            openai_model = await MindsDB.default.Models.getModel(model, 'mindsdb');
+        while (openAIModel.status !== 'complete' && openAIModel.status !== 'error') {
+            openAIModel = await MindsDB.default.Models.getModel(model, 'mindsdb');
         }
-
-        // Checking model's status
-        console.log('Model status: ' + openai_model.status);
-
-        if (openai_model.status === 'complete') {
-            this.model = openai_model;
-        }        
+        
+        // Check if the training was successful
+        if (openAIModel.status === 'complete') {
+            console.log(`Training of OpenAI model ${model} completed.`);
+        }
+        // If not, log the error
+        else if (openAIModel.status === 'error') {
+            console.error(`Training of OpenAI model ${model} failed.`);
+        }
     }
 
     async createIssue(title, description) {
