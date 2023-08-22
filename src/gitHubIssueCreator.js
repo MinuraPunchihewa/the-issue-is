@@ -43,7 +43,7 @@ class GitHubIssueCreator {
         }
     }
 
-    async connectOpenAI(model, lingo, style, sections) {
+    async createModel(model) {
         // Define the prompt template
         const promptTemplate = `You are a GitHub user and you want to create a new issue. You will be given a title and a description. You are required 
         to elaborate on the issue by providing the following sections: ${sections}.\n\nIn describing the issue, you should use the lingo: ${lingo} 
