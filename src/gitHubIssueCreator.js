@@ -104,17 +104,4 @@ class GitHubIssueCreator {
 
         console.log(response.value);
     }
-
-    async executeQuery(query) {
-        try {
-            const queryResult = await MindsDB.default.SQL.runQuery(query);
-            if (queryResult.rows.length > 0) {
-                const matchingUserRow = queryResult.rows;
-                console.log(matchingUserRow);
-            }
-        } catch (error) {
-            // Something went wrong sending the API request or executing the query.
-            console.error(error);
-        }
-    }
 }
