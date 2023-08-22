@@ -9,3 +9,5 @@ You should provide clear instructions, carefully craft descriptions, and use str
 Title: "{{title}}"
 Description: "{{description}}".
 `;
+
+export default promptTemplate;
