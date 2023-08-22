@@ -1,11 +1,9 @@
 import MindsDB from 'mindsdb-js-sdk';
 
 class GitHubIssueCreator {
-    constructor(mindsdb_user, mindsdb_password, github_api_key) {
+    constructor(mindsdb_user, mindsdb_password) {
         this.mindsdb_user = mindsdb_user;
         this.mindsdb_password = mindsdb_password;
-        this.github_api_key = github_api_key;
-        this.model = null;
     }
 
     async connectMindsDB() {
@@ -14,24 +12,27 @@ class GitHubIssueCreator {
                 user: this.mindsdb_user,
                 password: this.mindsdb_password
             });
-            console.log('Connected to MindsDB');
+            console.log('Connected to MindsDB.');
         } catch(error) {
             // Failed to authenticate.
             console.error(error);
         }
     }
 
-    async connectGitHub(database ,repository) {
+    async connectGitHub(database, repository, github_api_key) {
         try {
-            const githubDatabase = await MindsDB.default.Databases.createDatabase(
-                database,
-                'github',
-                {
-                    'repository': repository,
-                    'api_key': this.github_api_key
-                }
-            );
-            console.log('Connected to GitHub');
+            const gitHubDatabase = await MindsDB.Databases.getDatabase(database);
+            if (!gitHubDatabase) {
+                await MindsDB.default.Databases.createDatabase(
+                    database,
+                    'github',
+                    {
+                        'repository': repository,
+                        'api_key': github_api_key
+                    }
+                );
+            }
+            console.log('Connected to GitHub and created a database in MindsDB.');
         } catch (error) {
             // Couldn't connect to database.
             console.error(error);
