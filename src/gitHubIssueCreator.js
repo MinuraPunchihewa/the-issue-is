@@ -118,17 +118,7 @@ class GitHubIssueCreator {
         return response.value;
     }
 
-    async createIssue(title, description) {
-        // Define query options
-        const queryOptions = {
-            where: [
-              `title = \'${title}.\'`,
-              `description = \'${description}.\'`
-            ]
-        }
-
-        const response = await this.model.query(queryOptions);
-
-        console.log(response.value);
+    async createIssue(database, title, description) {
+        // Create a new issue
     }
 }
