@@ -2,5 +2,8 @@
   "type": "module",
   "dependencies": {
     "mindsdb-js-sdk": "^2.2.2"
+  },
+  "devDependencies": {
+    "jest": "^29.6.3"
   }
 }
