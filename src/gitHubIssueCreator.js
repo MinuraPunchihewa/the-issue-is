@@ -8,20 +8,24 @@ class GitHubIssueCreator {
 
     async connectMindsDB() {
         try {
+            // Authenticate with MindsDB
             await MindsDB.default.connect({
                 user: this.mindsdb_user,
                 password: this.mindsdb_password
             });
             console.log('Connected to MindsDB.');
         } catch(error) {
-            // Failed to authenticate.
+            // Failed to authenticate
             console.error(error);
         }
     }
 
     async createDatabase(database, repository, github_api_key) {
         try {
+            // Check if the database exists
             const gitHubDatabase = await MindsDB.Databases.getDatabase(database);
+
+            // If the database doesn't exist, create it
             if (!gitHubDatabase) {
                 await MindsDB.default.Databases.createDatabase(
                     database,
@@ -34,7 +38,7 @@ class GitHubIssueCreator {
             }
             console.log('Connected to GitHub and created a database in MindsDB.');
         } catch (error) {
-            // Couldn't connect to database.
+            // Couldn't connect to database
             console.error(error);
         }
     }
