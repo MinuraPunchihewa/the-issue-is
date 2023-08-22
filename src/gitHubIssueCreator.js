@@ -1,4 +1,5 @@
 import MindsDB from 'mindsdb-js-sdk';
+const config = require('../config/config');
 
 class GitHubIssueCreator {
     constructor(mindsdb_user, mindsdb_password) {
@@ -45,10 +46,7 @@ class GitHubIssueCreator {
 
     async createModel(model) {
         // Define the prompt template
-        const promptTemplate = `You are a GitHub user and you want to create a new issue. You will be given a title and a description. You are required 
-        to elaborate on the issue by providing the following sections: ${sections}.\n\nIn describing the issue, you should use the lingo: ${lingo} 
-        and the style: ${style}.\n\nYou should provide clear instructions, carefully craft descriptions and use structured formatting.\n\n
-        Title: "{{title}}" description: "{{description}}".`          
+        const promptTemplate = config.promptTemplate;       
 
         // Define training options
         const trainingOptions = {
@@ -59,20 +57,24 @@ class GitHubIssueCreator {
         };
         
         try{
-            // Create and train a model
-            let openai_model = await MindsDB.default.Models.trainModel(
-                model,
-                'generated_issue',
-                'mindsdb',
-                trainingOptions
-            );
+            // Check if the model exists
+            const openAIModel = await MindsDB.default.Models.getModel(model, 'mindsdb');
+
+            // If the model doesn't exist, create it
+            if (!openAIModel) {
+                await MindsDB.default.Models.trainModel(
+                    model,
+                    'generated_issue',
+                    'mindsdb',
+                    trainingOptions
+                );
+            }
         } catch (error) {
-            // Couldn't connect to database.
+            // Couldn't connect to database
             console.error(error);
-            let openai_model = await MindsDB.default.Models.getModel(model, 'mindsdb');
         }
         
-        console.log('Created a model');
+        console.log(`Created OpenAI model ${model} in MindsDB.`);
 
         // Wait for the training to be completed
         while (openai_model.status !== 'complete' && openai_model.status !== 'error') {
