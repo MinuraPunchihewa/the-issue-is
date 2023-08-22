@@ -1,5 +1,5 @@
-const assert = require('assert');
-const GitHubIssueCreator = require('./src/gitHubIssueCreator');
+import assert from 'assert';
+import GitHubIssueCreator from './src/gitHubIssueCreator';
 import MindsDB from 'mindsdb-js-sdk';
 
 describe('GitHubIssueCreator', () => {
@@ -27,7 +27,7 @@ describe('GitHubIssueCreator', () => {
 
   after(async () => {
     // Delete the database
-    const databaseToDelete = await MindsDB.default.Databases.getDatabase(database);
+    const databaseToDelete = await MindsDB.Databases.getDatabase(database);
     if (databaseToDelete) {
       try {
         await databaseToDelete.delete();
@@ -38,20 +38,20 @@ describe('GitHubIssueCreator', () => {
     }
 
     // Delete the model
-    const modelToDelete = await MindsDB.default.Models.getModel(model);
+    const modelToDelete = await MindsDB.Models.getModel(model);
     if (modelToDelete) {
-        try {
-            await modelToDelete.delete();
-        } catch (error) {
-            // Something went wrong while deleting the model
-            console.error(error);
-        }
-        }
+      try {
+        await modelToDelete.delete();
+      } catch (error) {
+        // Something went wrong while deleting the model
+        console.error(error);
+      }
+    }
   });
 
   describe('#connectMindsDB()', () => {
     it('should connect to MindsDB', async () => {
-      assert.doesNotReject(async () => {
+      await assert.doesNotReject(async () => {
         await gitHubIssueCreator.connectMindsDB();
       });
     });
@@ -59,7 +59,7 @@ describe('GitHubIssueCreator', () => {
 
   describe('#createDatabase()', () => {
     it('should create a new database in MindsDB', async () => {
-      assert.doesNotReject(async () => {
+      await assert.doesNotReject(async () => {
         await gitHubIssueCreator.createDatabase(database, repository, github_api_key);
       });
     });
@@ -67,7 +67,7 @@ describe('GitHubIssueCreator', () => {
 
   describe('#createModel()', () => {
     it('should create a new model in MindsDB', async () => {
-      assert.doesNotReject(async () => {
+      await assert.doesNotReject(async () => {
         await gitHubIssueCreator.createModel(model);
       });
     });

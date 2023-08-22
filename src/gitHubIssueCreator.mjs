@@ -1,7 +1,7 @@
 import MindsDB from 'mindsdb-js-sdk';
-const config = require('../config/config');
+import config from '../config/config.js';
 
-class GitHubIssueCreator {
+export default class GitHubIssueCreator {
     constructor(mindsdb_user, mindsdb_password) {
         this.mindsdb_user = mindsdb_user;
         this.mindsdb_password = mindsdb_password;
@@ -122,5 +122,3 @@ class GitHubIssueCreator {
         // Create a new issue
     }
 }
-
-module.exports = GitHubIssueCreator;
