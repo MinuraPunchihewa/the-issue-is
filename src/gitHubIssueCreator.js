@@ -91,6 +91,33 @@ class GitHubIssueCreator {
         }
     }
 
+    async getIssueDescription(model, title, description, sections, lingo, style) {
+        // Define query options
+        const queryOptions = {
+            where: [
+              `title = \'${title}.\'`,
+              `description = \'${description}.\'`
+              `sections = \'${sections}.\'`
+              `lingo = \'${lingo}.\'`
+              `style = \'${style}.\'`
+            ]
+        }
+
+        // Check if the model exists
+        const openAIModel = await MindsDB.default.Models.getModel(model, 'mindsdb');
+
+        // If the model doesn't exist, throw an error
+        if (!openAIModel) {
+            throw new Error(`Model ${model} does not exist.`); 
+        }
+
+        // If the model exists, make a prediction
+        response = await openAIModel.query(queryOptions);
+
+        // Return the response
+        return response.value;
+    }
+
     async createIssue(title, description) {
         // Define query options
         const queryOptions = {
