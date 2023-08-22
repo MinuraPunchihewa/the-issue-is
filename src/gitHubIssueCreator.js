@@ -122,3 +122,5 @@ class GitHubIssueCreator {
         // Create a new issue
     }
 }
+
+module.exports = GitHubIssueCreator;
