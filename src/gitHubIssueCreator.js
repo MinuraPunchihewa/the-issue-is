@@ -19,7 +19,7 @@ class GitHubIssueCreator {
         }
     }
 
-    async connectGitHub(database, repository, github_api_key) {
+    async createDatabase(database, repository, github_api_key) {
         try {
             const gitHubDatabase = await MindsDB.Databases.getDatabase(database);
             if (!gitHubDatabase) {
