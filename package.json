@@ -1,4 +1,13 @@
 {
+  "name": "the-issue-is",
+  "description": "Empowering developres to create delightful GitHub issues",
+  "version": "1.0.0",
+  "author": "Minura Punchihewa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MinuraPunchihewa/the-issue-is.git"
+  },
+  "license": "GPL-3.0",
   "type": "module",
   "dependencies": {
     "mindsdb-js-sdk": "^2.2.2"
