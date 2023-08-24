@@ -1,26 +1,24 @@
 import assert from 'assert';
-import { describe, before, after, it } from '@jest/globals';
+import dotenv from 'dotenv';
 import GitHubIssueCreator from 'gitHubIssueCreator';
 import MindsDB from 'mindsdb-js-sdk';
 
 describe('GitHubIssueCreator', () => {
-  const mindsdb_user = 'mindsdb_user';
-  const mindsdb_password = 'mindsdb_password';
-  const database = 'github_issues';
-  const repository = 'my-repo';
-  const github_api_key = 'my-api-key';
-  const model = 'issue_model';
-  const title = 'Test issue';
-  const description = 'This is a test issue.';
+  const mindsdb_user = process.env.MINDSDB_USER;
+  const mindsdb_password =process.env.MINDSDB_PASSWORD;
+  const database = 'github_ds';
+  const repository = 'MinuraPunchihewa/ai-text-to-sql';
+  const github_api_key = process.env.GITHUB_TOKEN;
+  const model = 'openai_model';
+  const title = 'Unable to turn off the telemetry feature (#102)';
+  const description = 'The toggle button does not change on click.';
   const sections = 'Steps to reproduce, Expected behavior, Actual behavior';
-  const lingo = 'technical';
+  const lingo = 'Friendly manager';
   const style = 'concise';
-
-  let gitHubIssueCreator;
 
   beforeAll(async () => {
     // Create the database and model
-    gitHubIssueCreator = new GitHubIssueCreator(mindsdb_user, mindsdb_password);
+    const gitHubIssueCreator = new GitHubIssueCreator(mindsdb_user, mindsdb_password);
     await gitHubIssueCreator.connectMindsDB();
     await gitHubIssueCreator.createDatabase(database, repository, github_api_key);
     await gitHubIssueCreator.createModel(model);
