@@ -1,5 +1,6 @@
 import assert from 'assert';
-import GitHubIssueCreator from './src/gitHubIssueCreator';
+import { describe, before, after, it } from '@jest/globals';
+import GitHubIssueCreator from 'gitHubIssueCreator';
 import MindsDB from 'mindsdb-js-sdk';
 
 describe('GitHubIssueCreator', () => {
@@ -17,7 +18,7 @@ describe('GitHubIssueCreator', () => {
 
   let gitHubIssueCreator;
 
-  before(async () => {
+  beforeAll(async () => {
     // Create the database and model
     gitHubIssueCreator = new GitHubIssueCreator(mindsdb_user, mindsdb_password);
     await gitHubIssueCreator.connectMindsDB();
@@ -25,7 +26,7 @@ describe('GitHubIssueCreator', () => {
     await gitHubIssueCreator.createModel(model);
   });
 
-  after(async () => {
+  afterAll(async () => {
     // Delete the database
     const databaseToDelete = await MindsDB.Databases.getDatabase(database);
     if (databaseToDelete) {
