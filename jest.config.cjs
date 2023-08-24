@@ -1,22 +1,9 @@
 module.exports = {
-  testEnvironment: 'node --experimental-vm-modules node_modules/jest/bin/jest.js',
+  testEnvironment: 'node',
+};
+
+module.exports = {
   testMatch: [
     '**/tests/**/*.test.mjs'
-  ],
-  transform: {},
-  transformIgnorePatterns: [
-    '/node_modules/',
-    '\\.pnp\\.[^\\/]+$'
-  ],
-  moduleFileExtensions: [
-    'js',
-    'mjs',
-    'json',
-    'node'
-  ],
-  globals: {
-    'ts-jest': {
-      useESM: true
-    }
-  }
+  ]
 };
