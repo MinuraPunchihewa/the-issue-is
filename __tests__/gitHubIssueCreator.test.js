@@ -5,9 +5,9 @@ import MindsDB from 'mindsdb-js-sdk';
 
 describe('GitHubIssueCreator', () => {
   const mindsdb_user = process.env.MINDSDB_USER;
-  const mindsdb_password =process.env.MINDSDB_PASSWORD;
+  const mindsdb_password = process.env.MINDSDB_PASSWORD;
   const database = 'github_ds';
-  const repository = 'MinuraPunchihewa/ai-text-to-sql';
+  const repository = process.env.GITHUB_REPOSITORY;;
   const github_api_key = process.env.GITHUB_TOKEN;
   const model = 'openai_model';
   const title = 'Unable to turn off the telemetry feature (#102)';
